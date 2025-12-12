@@ -3,7 +3,9 @@ body {
    color: #f3f3f3;
    font-family: "Roboto", sans-serif;
    font-size: 16px;
-   max-width: 1000px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
 }
 
 h1,
