@@ -1,75 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="utf-8" />
-      <title>Personal Library</title>
-      <link
-         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap"
-         rel="stylesheet"
-      />
-      <link rel="stylesheet" href="/style.css" />
-   </head>
-   <body>
-      <h1>Personal Library</h1>
+<body>
+  <div id="main">
+    <h1>Personal Library</h1>
 
-      <form method="POST" action="/add">
-         <p>
-            Book title:
-            <input type="text" name="searchTitle" />
-         </p>
+    <form method="POST" action="/add">
+      <p>Book title:
+        <input type="text" name="searchTitle">
+      </p>
 
-         <p>
-            Status:
-            <select name="status">
-               <option value="To Read">To Read</option>
-               <option value="Reading">Reading</option>
-               <option value="Finished">Finished</option>
-            </select>
-         </p>
+      <p>Status:
+        <select name="status">
+          <option value="To Read">To Read</option>
+          <option value="Reading">Reading</option>
+          <option value="Finished">Finished</option>
+        </select>
+      </p>
 
-         <p>
-            Rating:
-            <input type="number" name="rating" min="1" max="5" />
-         </p>
+      <p>Rating:
+        <input type="number" name="rating" min="1" max="5">
+      </p>
 
-         <p>
-            Notes:
-            <textarea name="notes" rows="3"></textarea>
-         </p>
+      <p>Notes:
+        <textarea name="notes" rows="3"></textarea>
+      </p>
 
-         <button type="submit">Add</button>
-      </form>
+      <button type="submit">Add</button>
+    </form>
 
-      <h2>My Books</h2>
+    <h2>My Books</h2>
 
-      <% if (books && books.length > 0) { %>
+    <% if (books && books.length > 0) { %>
       <% books.forEach(function (book) { %>
-      <div>
-         <p><strong><%= book.title %></strong></p>
-         <p>Status: <%= book.status %></p>
+        <div>
+          <p><strong><%= book.title %></strong></p>
+          <p>Status: <%= book.status %></p>
 
-         <% if (book.author) { %><p>Author: <%= book.author %></p><% } %>
-         <% if (book.year) { %><p>Year: <%= book.year %></p><% } %>
-         <% if (book.rating) { %><p>Rating: <%= book.rating %></p><% } %>
-         <% if (book.notes) { %><p>Notes: <%= book.notes %></p><% } %>
+          <% if (book.author) { %><p>Author: <%= book.author %></p><% } %>
+          <% if (book.year) { %><p>Year: <%= book.year %></p><% } %>
+          <% if (book.rating) { %><p>Rating: <%= book.rating %></p><% } %>
+          <% if (book.notes) { %><p>Notes: <%= book.notes %></p><% } %>
 
-         <form method="POST" action="/update-status">
-            <input type="hidden" name="id" value="<%= book._id %>" />
+          <form method="POST" action="/update-status">
+            <input type="hidden" name="id" value="<%= book._id %>">
             <select name="status">
-               <option value="To Read" <%= book.status === "To Read" ? "selected" : "" %>>To Read</option>
-               <option value="Reading" <%= book.status === "Reading" ? "selected" : "" %>>Reading</option>
-               <option value="Finished" <%= book.status === "Finished" ? "selected" : "" %>>Finished</option>
+              <option value="To Read" <%= book.status === "To Read" ? "selected" : "" %>>To Read</option>
+              <option value="Reading" <%= book.status === "Reading" ? "selected" : "" %>>Reading</option>
+              <option value="Finished" <%= book.status === "Finished" ? "selected" : "" %>>Finished</option>
             </select>
             <button type="submit">Update</button>
-         </form>
+          </form>
 
-         <% if (book.coverUrl) { %>
-         <img src="<%= book.coverUrl %>" alt="Book cover" />
-         <% } %>
-      </div>
+          <% if (book.coverUrl) { %>
+            <img src="<%= book.coverUrl %>">
+          <% } %>
+        </div>
       <% }); %>
-      <% } else { %>
+    <% } else { %>
       <p>No books yet.</p>
-      <% } %>
-   </body>
-</html>
+    <% } %>
+  </div>
+</body>
