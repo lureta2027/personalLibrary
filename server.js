@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", booksRouter);
 
 mongoose.connect(process.env.MONGO_CONNECTION_STRING).then(function () {
-   app.listen(port, function () {
-      console.log("Server listening on port " + port);
-   });
+  app.listen(port, function () {
+    console.log("Server listening on port " + port);
+  });
 });
