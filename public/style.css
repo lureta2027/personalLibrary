@@ -1,5 +1,5 @@
 body {
-   background-color: #8b7058;
+   background-color: #005073;
    color: #f3f3f3;
    font-family: "Roboto", sans-serif;
    font-size: 16px;
@@ -16,6 +16,10 @@ h2 {
 
 form {
    margin-bottom: 20px;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;   
+    background-color: 	#107dac;
 }
 
 input,
