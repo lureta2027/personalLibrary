@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <title>Personal Library</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <!-- Google font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap"
+         rel="stylesheet"
+      />
+
+      <!-- CSS -->
+      <link rel="stylesheet" href="/style.css" />
+   </head>
+   <body>
+      <div class="container content">
+         <h1>Personal Library</h1>
+         <p>Add books to your library and track their status.</p>
+
+         <% if (errorMessage && errorMessage.length > 0) { %>
+         <p class="error"><%= errorMessage %></p>
+         <% } %>
+
+         <!-- FORM REQUIREMENT -->
+         <form method="POST" action="/add" class="book-form">
+            <label>
+               Book title to search:
+               <input
+                  type="text"
+                  name="searchTitle"
+                  placeholder="e.g. Pride and Prejudice"
+               />
+            </label>
+
+            <label>
+               Status:
+               <select name="status">
+                  <option value="To Read">To Read</option>
+                  <option value="Reading">Reading</option>
+                  <option value="Finished">Finished</option>
+               </select>
+            </label>
+
+            <label>
+               Rating (1–5, optional):
+               <input type="number" name="rating" min="1" max="5" />
+            </label>
+
+            <label>
+               Notes:
+               <textarea
+                  name="notes"
+                  rows="3"
+                  placeholder="Why you own it, thoughts, etc."
+               ></textarea>
+            </label>
+
+            <button type="submit">Add to Library</button>
+         </form>
+
+         <h2>My Books</h2>
+
+         <div class="books">
+            <% if (books && books.length > 0) { %>
+            <% books.forEach(function (book) { %>
+            <div class="book-card">
+               <div class="book-info">
+                  <p class="book-title">
+                     <strong><%= book.title %></strong>
+                  </p>
+
+                  <% if (book.author) { %>
+                  <p>Author: <%= book.author %></p>
+                  <% } %>
+
+                  <% if (book.year) { %>
+                  <p>Year: <%= book.year %></p>
+                  <% } %>
+
+                  <p>Status: <%= book.status %></p>
+
+                  <% if (book.rating) { %>
+                  <p>Rating: <%= book.rating %> / 5</p>
+                  <% } %>
+
+                  <% if (book.notes) { %>
+                  <p class="notes">Notes: <%= book.notes %></p>
+                  <% } %>
+
+                  <p class="date">
+                     Added:
+                     <%= book.createdAt ? book.createdAt.toLocaleString() : "" %>
+                  </p>
+
+                  <form
+                     method="POST"
+                     action="/update-status"
+                     class="status-form"
+                  >
+                     <input type="hidden" name="id" value="<%= book._id %>" />
+                     <select name="status">
+                        <option
+                           value="To Read"
+                           <%= book.status === "To Read" ? "selected" : "" %>
+                        >
+                           To Read
+                        </option>
+                        <option
+                           value="Reading"
+                           <%= book.status === "Reading" ? "selected" : "" %>
+                        >
+                           Reading
+                        </option>
+                        <option
+                           value="Finished"
+                           <%= book.status === "Finished" ? "selected" : "" %>
+                        >
+                           Finished
+                        </option>
+                     </select>
+                     <button type="submit">Update</button>
+                  </form>
+               </div>
+
+               <% if (book.coverUrl && book.coverUrl.length > 0) { %>
+               <div class="book-cover">
+                  <img src="<%= book.coverUrl %>" alt="Book cover" />
+               </div>
+               <% } %>
+            </div>
+            <% }); %>
+            <% } else { %>
+            <p>No books in your library yet. Add one above!</p>
+            <% } %>
+         </div>
+      </div>
+   </body>
+</html>
